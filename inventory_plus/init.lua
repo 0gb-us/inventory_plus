@@ -82,36 +82,6 @@ inventory_plus.get_formspec = function(player,page)
 	return formspec
 end
 
--- trash slot
-inventory_plus.trash = minetest.create_detached_inventory("trash", {
-	allow_put = function(inv, listname, index, stack, player)
-		if minetest.setting_getbool("creative_mode") then
-			return stack:get_count()
-		else
-			return 0
-		end
-	end,
-	on_put = function(inv, listname, index, stack, player)
-		inv:set_stack(listname, index, nil)
-	end,
-})
-inventory_plus.trash:set_size("main", 1)
-
--- refill slot
-inventory_plus.refill = minetest.create_detached_inventory("refill", {
-	allow_put = function(inv, listname, index, stack, player)
-		if minetest.setting_getbool("creative_mode") then
-			return stack:get_count()
-		else
-			return 0
-		end
-	end,
-	on_put = function(inv, listname, index, stack, player)
-		inv:set_stack(listname, index, ItemStack(stack:get_name().." "..stack:get_stack_max()))
-	end,
-})
-inventory_plus.refill:set_size("main", 1)
-
 -- register_on_joinplayer
 minetest.register_on_joinplayer(function(player)
 	if minetest.setting_getbool("inventory_craft_small") then
